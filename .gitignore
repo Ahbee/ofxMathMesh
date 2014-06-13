@@ -1,0 +1,5 @@
+example_simple/bin/example_simpleDebug.app
+example_SineWaves/bin/example_SineWavesDebug.app
+example_Butterfly/bin/example_ButterflyDebug.app
+
+*.xcuserstate
