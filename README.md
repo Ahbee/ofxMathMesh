@@ -166,7 +166,7 @@ You retrieve an ofMesh from your by equation by calling `getMesh()` or `getBackM
 
 #### step 9 - normals
 
-Normals are auto calculated, if you want to draw the normals you can use the functions `drawNormals(float length)` or `drawFaceNormals(float length)`
+Normals are auto calculated using these [formulas](http://mathworld.wolfram.com/NormalVector.html), if you want to draw the normals you can use the functions `drawNormals(float length)` or `drawFaceNormals(float length)`
 
 ##Extras
 
