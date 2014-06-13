@@ -2,6 +2,8 @@
 
 ofxMathMesh allows you to create ofMeshs form mathematical equations. You can create meshes from 3dFunctions, 2dFunctions, Parametric Surfaces and Parametric Curves
 
+you can see a small demo here - [https://vimeo.com/98150899](https://vimeo.com/98150899)
+
 ##Features
 
 * Creates Meshes from 3d Functions, 2d Functions, Parametric Surfaces and Parametric Curves
