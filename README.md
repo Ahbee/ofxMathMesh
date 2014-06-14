@@ -169,9 +169,7 @@ You retrieve an ofMesh from your by equation by calling `getMesh()` or `getBackM
 Normals are auto calculated using these [formulas](http://mathworld.wolfram.com/NormalVector.html), if you want to draw the normals you can use the functions `drawNormals(float length)` or `drawFaceNormals(float length)`
 
 ##Extras
-
-
-
+There are a lot more things you can do with this add-on so if you have any  questions, you can ask me on the [forum thread](http://forum.openframeworks.cc/t/ofxmathmesh-create-meshes-from-mathematical-equations/16099)
 
 
 
