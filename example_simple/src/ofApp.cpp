@@ -18,7 +18,7 @@ void ofApp::setup(){
     
     currentScene = 0;
     
-    info.loadFont("verdana.ttf", 20);
+    info.load("verdana.ttf", 20);
     
     light.setPosition(0, 3, 0);
     light.setScale(.01);
@@ -34,7 +34,7 @@ void ofApp::setup(){
     tube.setup(-2, 2, -2, 2,0,2,.1, .1);
     spriral.setup(0, 2*M_PI, .01);
     
-    flower.loadImage("flower.jpg");
+    flower.load("flower.jpg");
 }
 
 //--------------------------------------------------------------
