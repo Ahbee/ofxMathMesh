@@ -105,7 +105,8 @@ void ofxMathSurface::drawNormals(float length) const{
     
     for(int i = 0; i < (int)frontFaceNormals.size(); i++) {
         vert = vertices[i];
-        normal = normals[i].normalized();
+        normal = normals[i];
+        normal.normalize();
         normalsMesh.setVertex( i*2, vert);
         normal *= length;
         normalsMesh.setVertex(i*2+1, normal+vert);
@@ -116,9 +117,10 @@ void ofxMathSurface::drawNormals(float length) const{
     
     normalsMesh.getVertices().resize( backFaceNormals.size() * 2);
     const vector<ofVec3f>& backNormals = backFaceNormals;
-    for(int i = 0; i < (int)backFaceNormals.size(); i++) {
+    for(int i = 0; i < (int)backNormals.size(); i++) {
         vert = vertices[i];
-        normal = backFaceNormals[i].normalized();
+        normal = backNormals[i];
+        normal.normalize();
         normalsMesh.setVertex( i*2, vert);
         normal *= length;
         normalsMesh.setVertex(i*2+1, normal+vert);
@@ -139,7 +141,6 @@ void ofxMathSurface::drawFaceNormals(float length) const {
     ofMesh nMesh;
     nMesh.setMode(OF_PRIMITIVE_LINES);
     const vector<ofVec3f> &verts = vertices;
-    int c = 0;
     for (int i = 0; i < verts.size(); i+=3) {
         ofVec3f v1 = verts[i];
         ofVec3f v2 = verts[i+1];

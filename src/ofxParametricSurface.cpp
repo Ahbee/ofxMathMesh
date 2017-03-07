@@ -134,7 +134,7 @@ ofVec3f ofxParametricSurface::normalForPoint(float u, float v,ofPoint value){
 //    
 //    ofVec3f dv = (dvRight + -dvLeft);
     
-    ofVec3f normal = duRight.crossed(dvRight).normalized();
+    ofVec3f normal = duRight.cross(dvRight).normalize();
     return -normal;
 }
 
