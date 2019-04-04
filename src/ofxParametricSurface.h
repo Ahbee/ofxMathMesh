@@ -14,13 +14,13 @@ public:
     // override backColor and/or backTexCoord if you are using the 2 sided draw function;
     virtual ofPoint valueForPoint(float u,float v) = 0;
     virtual ofFloatColor colorForPoint(float u, float v, ofPoint value){return ofFloatColor::white;}
-    virtual ofVec2f texCoordForPoint(float u,float v,ofPoint value){return ofVec2f::zero();}
+    virtual glm::vec2 texCoordForPoint(float u,float v,ofPoint value){return glm::vec2();}
     virtual ofFloatColor backColorForPoint(float u, float v, ofPoint value){return ofFloatColor::white;}
-    virtual ofVec2f backTexCoordForPoint(float u,float v, ofPoint value){return ofVec2f::zero();}
+    virtual glm::vec2 backTexCoordForPoint(float u,float v, ofPoint value){return glm::vec2();}
     
     // retrives normal at point see http://mathworld.wolfram.com/NormalVector.html
     // really no need to override this
-    virtual ofVec3f normalForPoint(float u,float v,ofPoint value);
+    virtual glm::vec3 normalForPoint(float u,float v,ofPoint value);
     
     void setup(float uMin,float uMax,float vMin,float vMax,float uStep,float vStep);
     

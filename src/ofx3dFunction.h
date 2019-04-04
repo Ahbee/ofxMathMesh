@@ -14,13 +14,13 @@ public:
     // x and z make up the point in your domain, while y is the corresponding range value
     virtual float valueForPoint(float x,float z) = 0;
     virtual ofFloatColor colorForPoint(float x,float z, float y) {return ofFloatColor::white;}
-    virtual ofVec2f texCoordForPoint(float x,float z ,float y){ return ofVec2f::zero();}
+    virtual glm::vec2 texCoordForPoint(float x,float z ,float y){ return glm::vec2();}
     virtual ofFloatColor backColorForPoint(float x, float z,float y){return ofFloatColor::white;}
-    virtual ofVec2f backTexCoordForPoint(float x,float z, float y){return ofVec2f::zero();}
+    virtual glm::vec2 backTexCoordForPoint(float x,float z, float y){return glm::vec2();}
     
     // retrives normal at point see http://mathworld.wolfram.com/NormalVector.html
     // really no need to override this
-    virtual ofVec3f normalForPoint(float x,float z,float y);
+    virtual glm::vec3 normalForPoint(float x,float z,float y);
     
     // setups the function. You must call this before anything else.
     // You want to set xMin,xMax,zMin,and zMax to the largest possible ranges (Max-Min)
@@ -62,9 +62,9 @@ public:
     
     
 private:
-    void addQuad(const ofVec3f &one,const ofVec3f &two,const ofVec3f &three,const ofVec3f &four);
-    void addTriangle(const ofVec3f &one,const ofVec3f &two,const ofVec3f &three);
-    void addTriangleWithClip(const ofVec3f &a,const ofVec3f &b,const ofVec3f &c);
+    void addQuad(const glm::vec3 &one,const glm::vec3 &two,const glm::vec3 &three,const glm::vec3 &four);
+    void addTriangle(const glm::vec3 &one,const glm::vec3 &two,const glm::vec3 &three);
+    void addTriangleWithClip(const glm::vec3 &a,const glm::vec3 &b,const glm::vec3 &c);
     void setXStep(float step_);
     void setZStep(float step_);
     void loadDomainPoints();

@@ -126,10 +126,10 @@ void ofx3dFunction::reload(){
             float y3 = valueForPoint(xDomainPoints[x+1], zDomainPoints[z+1]);
             float y4 = valueForPoint(xDomainPoints[x+1], zDomainPoints[z]);
             
-            ofVec3f one = ofVec3f(xDomainPoints[x],y1,zDomainPoints[z]);
-            ofVec3f two = ofVec3f(xDomainPoints[x],y2,zDomainPoints[z+1]);
-            ofVec3f three = ofVec3f(xDomainPoints[x+1],y3,zDomainPoints[z+1]);
-            ofVec3f four = ofVec3f(xDomainPoints[x+1],y4,zDomainPoints[z]);
+            glm::vec3 one = glm::vec3(xDomainPoints[x],y1,zDomainPoints[z]);
+            glm::vec3 two = glm::vec3(xDomainPoints[x],y2,zDomainPoints[z+1]);
+            glm::vec3 three = glm::vec3(xDomainPoints[x+1],y3,zDomainPoints[z+1]);
+            glm::vec3 four = glm::vec3(xDomainPoints[x+1],y4,zDomainPoints[z]);
             if (bUseYBounds) {
                 addTriangleWithClip(one, two, four);
                 addTriangleWithClip(two, three, four);
@@ -140,7 +140,7 @@ void ofx3dFunction::reload(){
     }
 }
 
-ofVec3f ofx3dFunction::normalForPoint(float x, float z,float y){
+glm::vec3 ofx3dFunction::normalForPoint(float x, float z,float y){
     float yValue = y;
     float delta = xStep;
     
@@ -158,25 +158,25 @@ ofVec3f ofx3dFunction::normalForPoint(float x, float z,float y){
     float derivativeZ = (derivativeZPos + derivativeZNeg)/2.0;
     
     // the mathWorld formula gives back faced normals so we have to reverse the normal;
-    ofVec3f normal = -ofVec3f(derivativeX,-1,derivativeZ).normalize();
+    glm::vec3 normal = -glm::normalize(glm::vec3(derivativeX,-1.0f,derivativeZ));
     
     return normal;
 }
 
-void ofx3dFunction::addQuad(const ofVec3f &one, const ofVec3f &two, const ofVec3f &three, const ofVec3f &four){
+void ofx3dFunction::addQuad(const glm::vec3 &one, const glm::vec3 &two, const glm::vec3 &three, const glm::vec3 &four){
     addTriangle(one, two, four);
     addTriangle(two, three, four);
 }
 
-void ofx3dFunction::addTriangle(const ofVec3f &one, const ofVec3f &two, const ofVec3f &three){
+void ofx3dFunction::addTriangle(const glm::vec3 &one, const glm::vec3 &two, const glm::vec3 &three){
     vertices.push_back(one);
     vertices.push_back(two);
     vertices.push_back(three);
     
     // load normals
-    ofVec3f normal1 = normalForPoint(one.x, one.z,one.y);
-    ofVec3f normal2 = normalForPoint(two.x, two.z,two.y);
-    ofVec3f normal3 = normalForPoint(three.x,three.z,three.y);
+    glm::vec3 normal1 = normalForPoint(one.x, one.z,one.y);
+    glm::vec3 normal2 = normalForPoint(two.x, two.z,two.y);
+    glm::vec3 normal3 = normalForPoint(three.x,three.z,three.y);
     
     frontFaceNormals.push_back(normal1);
     frontFaceNormals.push_back(normal2);
@@ -218,9 +218,9 @@ void ofx3dFunction::addTriangle(const ofVec3f &one, const ofVec3f &two, const of
     }
     
     //load texCoords
-    ofVec2f tex1 = texCoordForPoint(one.x, one.z,one.y);
-    ofVec2f tex2 = texCoordForPoint(two.x,two.z,two.y);
-    ofVec2f tex3 = texCoordForPoint(three.x,three.z,three.y);
+    glm::vec2 tex1 = texCoordForPoint(one.x, one.z,one.y);
+    glm::vec2 tex2 = texCoordForPoint(two.x,two.z,two.y);
+    glm::vec2 tex3 = texCoordForPoint(three.x,three.z,three.y);
     
     frontFaceTexCoords.push_back(tex1);
     frontFaceTexCoords.push_back(tex2);
@@ -236,11 +236,11 @@ void ofx3dFunction::addTriangle(const ofVec3f &one, const ofVec3f &two, const of
     
 }
 
-void ofx3dFunction::addTriangleWithClip(const ofVec3f &a,const ofVec3f &b,const ofVec3f &c){
+void ofx3dFunction::addTriangleWithClip(const glm::vec3 &a,const glm::vec3 &b,const glm::vec3 &c){
     ofMesh mesh;
-    ofVec3f planeNormal = ofVec3f(0,1,0);
+    glm::vec3 planeNormal = glm::vec3(0,1,0);
     float planeD = -yMin;
-    ofVec3f lineSeg[2];
+    glm::vec3 lineSeg[2];
     
     if (a.y < yMin && b.y > yMin && c.y > yMin) {
         getSegmentPlaneIntersection(a, b, lineSeg[0], planeNormal, planeD);
@@ -274,9 +274,9 @@ void ofx3dFunction::addTriangleWithClip(const ofVec3f &a,const ofVec3f &b,const 
     
     planeD = -yMax;
     for (int i = 0; i < mesh.getVertices().size();i+=3) {
-        ofVec3f a = mesh.getVertices()[i];
-        ofVec3f b = mesh.getVertices()[i+1];
-        ofVec3f c = mesh.getVertices()[i+2];
+        glm::vec3 a = mesh.getVertices()[i];
+        glm::vec3 b = mesh.getVertices()[i+1];
+        glm::vec3 c = mesh.getVertices()[i+2];
         if (a.y > yMax && b.y < yMax && c.y < yMax) {
             getSegmentPlaneIntersection(a, b, lineSeg[0], planeNormal, planeD);
             getSegmentPlaneIntersection(a, c, lineSeg[1], planeNormal, planeD);

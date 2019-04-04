@@ -77,8 +77,8 @@ void ofx2dFunction::reload(){
     int xMinDomainPoint = round(ofMap(xMin, absXMin, absXMax, 0, domainPoints.size() - 1));
     int xMaxDomainPoint = round(ofMap(xMax, absXMin, absXMax, 0, domainPoints.size()-1));
     for (int i = xMinDomainPoint; i < xMaxDomainPoint; i++){
-        ofVec2f one = ofVec2f(domainPoints[i],valueForPoint(domainPoints[i]));
-        ofVec2f two = ofVec2f(domainPoints[i+1],valueForPoint(domainPoints[i+1]));
+        glm::vec2 one = glm::vec2(domainPoints[i],valueForPoint(domainPoints[i]));
+        glm::vec2 two = glm::vec2(domainPoints[i+1],valueForPoint(domainPoints[i+1]));
         if (bUseYBounds) {
             addLineSegClip(one,two);
         }else{
@@ -87,9 +87,11 @@ void ofx2dFunction::reload(){
     }
 }
 
-void ofx2dFunction::addLineSeg(const ofVec2f &one, const ofVec2f &two){
-    vertices.push_back(one);
-    vertices.push_back(two);
+void ofx2dFunction::addLineSeg(const glm::vec2 &one, const glm::vec2 &two){
+    glm::vec3 one2D = glm::vec3(one.x,one.y,0.0f);
+    glm::vec3 two2D = glm::vec3(two.x,two.y,0.0f);
+    vertices.push_back(one2D);
+    vertices.push_back(two2D);
     
     ofFloatColor color1 = colorForPoint(one.x, one.y);
     ofFloatColor color2 = colorForPoint(two.x, two.y);
@@ -99,33 +101,35 @@ void ofx2dFunction::addLineSeg(const ofVec2f &one, const ofVec2f &two){
 }
 
 
-void ofx2dFunction::addLineSegClip(const ofVec2f &one, const ofVec2f &two){
+void ofx2dFunction::addLineSegClip(const glm::vec2 &one, const glm::vec2 &two){
     ofMesh tempMesh;
-    ofPoint yMaxLine[2];
-    ofPoint intersection;
-    yMaxLine[0] = ofVec2f(xMin-10,yMax);
-    yMaxLine[1] = ofVec2f(xMax+10, yMax);
+    glm::vec2 yMaxLine[2];
+    glm::vec2 intersection;
+    yMaxLine[0] = glm::vec2(xMin-10,yMax);
+    yMaxLine[1] = glm::vec2(xMax+10, yMax);
     
     if (one.y > yMax && two.y < yMax) {
         ofLineSegmentIntersection(one, two, yMaxLine[0], yMaxLine[1], intersection);
-        tempMesh.addVertex(intersection);
-        tempMesh.addVertex(two);
+        tempMesh.addVertex(glm::vec3(intersection.x, intersection.y, 0.0f));
+        glm::vec3 two2D = glm::vec3(two.x,two.y,0.0f);
+        tempMesh.addVertex(two2D);
     }else if (one.y < yMax && two.y > yMax ){
         ofLineSegmentIntersection(one, two, yMaxLine[0], yMaxLine[1], intersection);
-        tempMesh.addVertex(one);
-        tempMesh.addVertex(intersection);
+        glm::vec3 one2D = glm::vec3(one.x,one.y,0.0f);
+        tempMesh.addVertex(one2D);
+        tempMesh.addVertex(glm::vec3(intersection.x, intersection.y, 0.0f));
     }else if (one.y <= yMax && two.y <=yMax){
-        tempMesh.addVertex(one);
-        tempMesh.addVertex(two);
+        tempMesh.addVertex(glm::vec3(one.x, one.y, 0.0f));
+        tempMesh.addVertex(glm::vec3(two.x, two.y, 0.0f));
     }else if (one.y > yMax && two.y > yMax){
         
     }
-    ofPoint yMinLine[2];
-    yMinLine[0] = ofVec2f(xMin-10,yMin);
-    yMinLine[1] = ofVec2f(xMax+10,yMin);
+    glm::vec2 yMinLine[2];
+    yMinLine[0] = glm::vec2(xMin-10,yMin);
+    yMinLine[1] = glm::vec2(xMax+10,yMin);
     for (int i = 0 ; i < tempMesh.getVertices().size(); i+=2) {
-        ofVec2f a = tempMesh.getVertices()[i];
-        ofVec2f b = tempMesh.getVertices()[i+1];
+        glm::vec2 a = glm::vec2(tempMesh.getVertices()[i]);
+        glm::vec2 b = glm::vec2(tempMesh.getVertices()[i+1]);
         if (a.y < yMin && b.y > yMin) {
             ofLineSegmentIntersection(a, b, yMinLine[0], yMinLine[1], intersection);
             addLineSeg(intersection, b);

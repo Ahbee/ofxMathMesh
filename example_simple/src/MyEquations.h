@@ -59,10 +59,10 @@ public:
         return ofPoint(x,y,z);
     }
     
-    ofVec2f texCoordForPoint(float u,float v,ofPoint value){
+    glm::vec2 texCoordForPoint(float u,float v,ofPoint value){
         float s = u/(2*M_PI);
         float t = v/(2*M_PI);
-        return ofVec2f(s,t);
+        return glm::vec2(s,t);
     }
     
     ofFloatColor backColorForPoint(float u,float v,ofPoint value){

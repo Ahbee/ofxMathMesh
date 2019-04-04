@@ -13,7 +13,7 @@ public:
 private:
     ofVbo vbo;
 protected:
-    vector<ofVec3f> vertices;
+    vector<glm::vec3> vertices;
     vector<ofFloatColor> colors;
 protected:
     void clear();

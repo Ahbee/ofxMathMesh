@@ -36,19 +36,19 @@ private:
 
 protected:
     vector<ofFloatColor> backFaceColors;
-    vector<ofVec2f> backFaceTexCoords;
+    vector<glm::vec2> backFaceTexCoords;
     vector<ofFloatColor> frontFaceColors;
-    vector<ofVec2f> frontFaceTexCoords;
-    vector<ofVec3f> frontFaceNormals;
-    vector<ofVec3f> backFaceNormals;
-    vector<ofVec3f> vertices;
+    vector<glm::vec2> frontFaceTexCoords;
+    vector<glm::vec3> frontFaceNormals;
+    vector<glm::vec3> backFaceNormals;
+    vector<glm::vec3> vertices;
     bool flatColors;
 
 protected:
     void clear();
-    static float distFromPlane(const ofVec3f &point,const ofVec3f &planeNormal,const float &planeD);
-    static bool getSegmentPlaneIntersection(const ofVec3f &a,const ofVec3f &b,ofVec3f &intersectionPoint,const ofVec3f &planeNormal,const float &planeD);
-    static void addTriangleToMesh(ofMesh &mesh,const ofVec3f &one,const ofVec3f &two,const ofVec3f &three);
-    static void addQuadToMesh(ofMesh &mesh,const ofVec3f &one,const ofVec3f &two,const ofVec3f &three,const ofVec3f &four);
-    static ofVec3f getCenter(const ofMeshFace& face);
+    static float distFromPlane(const glm::vec3 &point,const glm::vec3 &planeNormal,const float &planeD);
+    static bool getSegmentPlaneIntersection(const glm::vec3 &a,const glm::vec3 &b,glm::vec3 &intersectionPoint,const glm::vec3 &planeNormal,const float &planeD);
+    static void addTriangleToMesh(ofMesh &mesh,const glm::vec3 &one,const glm::vec3 &two,const glm::vec3 &three);
+    static void addQuadToMesh(ofMesh &mesh,const glm::vec3 &one,const glm::vec3 &two,const glm::vec3 &three,const glm::vec3 &four);
+    static glm::vec3 getCenter(const ofMeshFace& face);
 };

@@ -43,8 +43,8 @@ public:
     float getStep()const{return step;}
     
 private:
-    void addLineSeg(const ofVec2f &one, const ofVec2f &two);
-    void addLineSegClip(const ofVec2f &one, const ofVec2f &two);
+    void addLineSeg(const glm::vec2 &one, const glm::vec2 &two);
+    void addLineSegClip(const glm::vec2 &one, const glm::vec2 &two);
     void setStep(float step);
     void loadDomainPoints();
     
