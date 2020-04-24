@@ -99,26 +99,26 @@ void ofxParametricSurface::setup(float uMin_, float uMax_, float vMin_, float vM
     reload();
 }
 
-ofVec3f ofxParametricSurface::normalForPoint(float u, float v,ofPoint value){
+glm::vec3 ofxParametricSurface::normalForPoint(float u, float v,ofPoint value){
     // derivative u to the right
-    ofVec3f duRight;
+    glm::vec3 duRight;
     float delta = uStep;
-    ofVec3f valuePlus = valueForPoint(u+delta, v);
+    glm::vec3 valuePlus = valueForPoint(u+delta, v);
     duRight.x = (valuePlus.x - value.x)/delta;
     duRight.y = (valuePlus.y - value.y)/delta;
     duRight.z = (valuePlus.z - value.z)/delta;
     
 //    // derivative u to the left
-//    ofVec3f duLeft;
-//    ofVec3f valueMinus = valueForPoint(u-delta, v);
+//    glm::vec3 duLeft;
+//    glm::vec3 valueMinus = valueForPoint(u-delta, v);
 //    duLeft.x = (valueMinus.x - value.x)/delta;
 //    duLeft.y = (valueMinus.y - value.y)/delta;
 //    duLeft.z = (valueMinus.z - value.z)/delta;
 //    
-//    ofVec3f du = (-duLeft + duRight);
+//    glm::vec3 du = (-duLeft + duRight);
     
     // derivative v to the right
-    ofVec3f dvRight;
+    glm::vec3 dvRight;
     delta = vStep;
     valuePlus = valueForPoint(u, v+delta);
     dvRight.x = (valuePlus.x - value.x)/delta;
@@ -126,15 +126,16 @@ ofVec3f ofxParametricSurface::normalForPoint(float u, float v,ofPoint value){
     dvRight.z = (valuePlus.z - value.z)/delta;
     
 //    // deravative v to the left
-//    ofVec3f dvLeft;
+//    glm::vec3 dvLeft;
 //    valueMinus = valueForPoint(u, v-delta);
 //    dvLeft.x = (valueMinus.x - value.x)/delta;
 //    dvLeft.y = (valueMinus.y - value.y)/delta;
 //    dvLeft.z = (valueMinus.z - value.z)/delta;
 //    
-//    ofVec3f dv = (dvRight + -dvLeft);
-    
-    ofVec3f normal = duRight.cross(dvRight).normalize();
+//    glm::vec3 dv = (dvRight + -dvLeft);
+
+
+    glm::vec3 normal = glm::normalize(glm::cross(duRight, dvRight));
     return -normal;
 }
 
@@ -174,10 +175,10 @@ void ofxParametricSurface::addQuad(const ofxParametricSurface::ParametricPositio
     vertices.push_back(four.value);
     
     // load normals
-    ofVec3f normal1 = normalForPoint(one.u, one.v,one.value);
-    ofVec3f normal2 = normalForPoint(two.u,two.v,two.value);
-    ofVec3f normal3 = normalForPoint(three.u,three.v,three.value);
-    ofVec3f normal4 = normalForPoint(four.u,four.v,four.value);
+    glm::vec3 normal1 = normalForPoint(one.u, one.v,one.value);
+    glm::vec3 normal2 = normalForPoint(two.u,two.v,two.value);
+    glm::vec3 normal3 = normalForPoint(three.u,three.v,three.value);
+    glm::vec3 normal4 = normalForPoint(four.u,four.v,four.value);
     
     frontFaceNormals.push_back(normal1);
     frontFaceNormals.push_back(normal2);
@@ -236,10 +237,10 @@ void ofxParametricSurface::addQuad(const ofxParametricSurface::ParametricPositio
     }
     
    //load texCoords
-    ofVec2f tex1 = texCoordForPoint(one.u, one.v,one.value);
-    ofVec2f tex2 = texCoordForPoint(two.u,two.v,two.value);
-    ofVec2f tex3 = texCoordForPoint(three.u,three.v,three.value);
-    ofVec2f tex4 = texCoordForPoint(four.u,four.v,four.value);
+    glm::vec2 tex1 = texCoordForPoint(one.u, one.v,one.value);
+    glm::vec2 tex2 = texCoordForPoint(two.u,two.v,two.value);
+    glm::vec2 tex3 = texCoordForPoint(three.u,three.v,three.value);
+    glm::vec2 tex4 = texCoordForPoint(four.u,four.v,four.value);
     
     frontFaceTexCoords.push_back(tex1);
     frontFaceTexCoords.push_back(tex2);

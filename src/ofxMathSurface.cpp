@@ -99,14 +99,14 @@ void ofxMathSurface::drawNormals(float length) const{
     ofMesh normalsMesh;
     normalsMesh.setMode( OF_PRIMITIVE_LINES );
     normalsMesh.getVertices().resize( frontFaceNormals.size() * 2);
-    const vector<ofVec3f>& normals = frontFaceNormals;
-    ofVec3f normal;
-    ofVec3f vert;
+    const vector<glm::vec3>& normals = frontFaceNormals;
+    glm::vec3 normal;
+    glm::vec3 vert;
     
     for(int i = 0; i < (int)frontFaceNormals.size(); i++) {
         vert = vertices[i];
         normal = normals[i];
-        normal.normalize();
+        normal = glm::normalize(normal);
         normalsMesh.setVertex( i*2, vert);
         normal *= length;
         normalsMesh.setVertex(i*2+1, normal+vert);
@@ -116,11 +116,11 @@ void ofxMathSurface::drawNormals(float length) const{
     normalsMesh.draw();
     
     normalsMesh.getVertices().resize( backFaceNormals.size() * 2);
-    const vector<ofVec3f>& backNormals = backFaceNormals;
+    const vector<glm::vec3>& backNormals = backFaceNormals;
     for(int i = 0; i < (int)backNormals.size(); i++) {
         vert = vertices[i];
         normal = backNormals[i];
-        normal.normalize();
+        normal = glm::normalize(normal);
         normalsMesh.setVertex( i*2, vert);
         normal *= length;
         normalsMesh.setVertex(i*2+1, normal+vert);
@@ -130,27 +130,27 @@ void ofxMathSurface::drawNormals(float length) const{
     glDisable(GL_CULL_FACE);
 }
 
-ofVec3f ofxMathSurface::getCenter(const ofMeshFace& meshface){
-    const ofVec3f &v1 = meshface.getVertex(0);
-    const ofVec3f &v2 = meshface.getVertex(1);
-    const ofVec3f &v3 = meshface.getVertex(2);
+glm::vec3 ofxMathSurface::getCenter(const ofMeshFace& meshface){
+    const glm::vec3 &v1 = meshface.getVertex(0);
+    const glm::vec3 &v2 = meshface.getVertex(1);
+    const glm::vec3 &v3 = meshface.getVertex(2);
     return (v1 + v2 + v3)/3.0;
 }
 
 void ofxMathSurface::drawFaceNormals(float length) const {
     ofMesh nMesh;
     nMesh.setMode(OF_PRIMITIVE_LINES);
-    const vector<ofVec3f> &verts = vertices;
+    const vector<glm::vec3> &verts = vertices;
     for (int i = 0; i < verts.size(); i+=3) {
-        ofVec3f v1 = verts[i];
-        ofVec3f v2 = verts[i+1];
-        ofVec3f v3 = verts[i+2];
+        glm::vec3 v1 = verts[i];
+        glm::vec3 v2 = verts[i+1];
+        glm::vec3 v3 = verts[i+2];
         ofMeshFace meshFace;
         meshFace.setVertex(0, v1);
         meshFace.setVertex(1, v2);
         meshFace.setVertex(2, v3);
-        ofVec3f norm = meshFace.getFaceNormal() * length;
-        ofVec3f center = getCenter(meshFace);
+        glm::vec3 norm = meshFace.getFaceNormal() * length;
+        glm::vec3 center = getCenter(meshFace);
         nMesh.addVertex(center);
         nMesh.addVertex(center + norm);
     }
@@ -203,12 +203,11 @@ void ofxMathSurface::clear(){
     backFaceTexCoords.resize(0);
 }
 
-float ofxMathSurface::distFromPlane(const ofVec3f &point, const ofVec3f &planeNormal, const float &planeD){
-    return planeNormal.dot(point) + planeD;
-
+float ofxMathSurface::distFromPlane(const glm::vec3 &point, const glm::vec3 &planeNormal, const float &planeD){
+    return glm::dot(planeNormal, point) + planeD;
 }
 
-bool ofxMathSurface::getSegmentPlaneIntersection(const ofVec3f &a, const ofVec3f &b, ofVec3f &intersectionPoint, const ofVec3f &planeNormal, const float &planeD){
+bool ofxMathSurface::getSegmentPlaneIntersection(const glm::vec3 &a, const glm::vec3 &b, glm::vec3 &intersectionPoint, const glm::vec3 &planeNormal, const float &planeD){
     float d1 = distFromPlane(a, planeNormal, planeD);
     float d2 = distFromPlane(b, planeNormal, planeD);
     if (d1*d2 > 0) {
@@ -219,13 +218,13 @@ bool ofxMathSurface::getSegmentPlaneIntersection(const ofVec3f &a, const ofVec3f
     return true;
 }
 
-void ofxMathSurface::addTriangleToMesh(ofMesh &mesh, const ofVec3f &one, const ofVec3f &two, const ofVec3f &three){
+void ofxMathSurface::addTriangleToMesh(ofMesh &mesh, const glm::vec3 &one, const glm::vec3 &two, const glm::vec3 &three){
     mesh.addVertex(one);
     mesh.addVertex(two);
     mesh.addVertex(three);
 }
 
-void ofxMathSurface::addQuadToMesh(ofMesh &mesh, const ofVec3f &one, const ofVec3f &two, const ofVec3f &three, const ofVec3f &four){
+void ofxMathSurface::addQuadToMesh(ofMesh &mesh, const glm::vec3 &one, const glm::vec3 &two, const glm::vec3 &three, const glm::vec3 &four){
     mesh.addVertex(one);
     mesh.addVertex(two);
     mesh.addVertex(four);

@@ -191,7 +191,7 @@ void ofxAnimatable::drawCurve(int x, int y, int size, bool bg){
 	fillInParams(p1,p2,p3);
 	for (float i = 0.0f ; i< 1.0f; i+= step){
 		float val = calcCurveAt(i, curveStyle_, p1, p2, p3);
-		m.addVertex( ofVec3f(xx + s * i, yy + s - s * val) );
+		m.addVertex( glm::vec3(xx + s * i, yy + s - s * val) );
 	}
 	m.draw();
 	glColor4ub(255,255,255, 255);

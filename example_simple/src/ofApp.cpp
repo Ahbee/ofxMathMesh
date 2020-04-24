@@ -4,7 +4,7 @@
 void ofApp::setup(){
     cam.setAutoDistance(false);
     cam.setNearClip(.001);
-    cam.setTarget(ofVec3f::zero());
+    cam.setTarget(glm::vec3());
     cam.setPosition(0, 0, 10);
     ofDisableArbTex();
     ofSetSmoothLighting(true);

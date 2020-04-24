@@ -1,10 +1,10 @@
-#ofxMathMesh
+# ofxMathMesh
 
 ofxMathMesh allows you to create ofMeshs form mathematical equations. You can create meshes from 3dFunctions, 2dFunctions, Parametric Surfaces and Parametric Curves
 
 you can see a small demo here - [https://vimeo.com/98150899](https://vimeo.com/98150899)
 
-##Features
+## Features
 
 * Creates Meshes from 3d Functions, 2d Functions, Parametric Surfaces and Parametric Curves
 
@@ -17,9 +17,9 @@ you can see a small demo here - [https://vimeo.com/98150899](https://vimeo.com/9
 * Control bounds and resolution of your mesh
 
 
-##How to Use
+## How to Use
 
-####Step 1 - create a subclass
+#### Step 1 - create a subclass
 
 you can subclass from anyone of these parents:
 
@@ -33,7 +33,7 @@ For Example to create a Sphere(which is a parametric Surface) you do this:
 ```
 class Sphere:public ofxParametricSurface
 ```
-####Step 2 - override
+#### Step 2 - override
 in order to customize your mesh you must override one or more  of the following functions:
 
 * `valueForPoint` - mandatory     
@@ -66,7 +66,7 @@ public:
 
 ```
 
-####Step 4 - call setup
+#### Step 4 - call setup
 
 `setup` must be called in order to create a mesh. In `setup` you specify the bounds and step of your equation. Lower step means higher resolutions.
 For example to set up a full sphere you do this:
@@ -77,7 +77,7 @@ mySphere.setup(0, 2*M_PI, 0, M_PI, .1, .1);
 ```
 here *u* goes form 0 to 2PI, *v* goes from 0 to PI, and uStep = .1, and vStep = .1. Note that if you want to change the bounds of the equation after setup,you cannot go outside the initial setup bounds.
 
-####Step 5 - call draw 
+#### Step 5 - call draw 
 
 to draw your equation you call either `draw ` , `drawWireFrame`, or `drawPoints`
 
@@ -96,7 +96,7 @@ The 1st argument specifies whether you over-rid `colorForPoint`. The 2nd argumen
 
 
 
-####Step 6 - reloading
+#### Step 6 - reloading
 
 whenever to you update your equation, colors, texcoords,or bounds.You want to call `reload()`
 
@@ -105,7 +105,7 @@ mySphere.reload()
 ``` 
 this is useful for animation and live updates of your equation. If you are reloading constantly its a good idea to call this in the `update()` function.
 
-####Step 7 - drawing two sided
+#### Step 7 - drawing two sided
 
 if you want to have different colors and textures on front and backside, you need  to implement either `backColorForPoint` or `backTexCoordForPoint`. Then call the functions `drawFrontFaces` and `drawBackFaces` 
 
@@ -168,7 +168,7 @@ You retrieve an ofMesh from your equation by calling `getMesh()` or `getBackMesh
 
 Normals are auto calculated using these [formulas](http://mathworld.wolfram.com/NormalVector.html), if you want to draw the normals you can use the functions `drawNormals(float length)` or `drawFaceNormals(float length)`
 
-##Extras
+## Extras
 There are a lot more things you can do with this add-on so if you have any  questions, you can ask me on the [forum thread](http://forum.openframeworks.cc/t/ofxmathmesh-create-meshes-from-mathematical-equations/16099). Remember Have Fun!
 
 
